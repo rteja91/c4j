@@ -1,5 +1,18 @@
 language: ruby
 rvm:
-  - 2.0.0
-  - 1.9.3
+- 2.0.0
+- 1.9.3
+env:
+  global:
+  - secure: rjoy6k/EQ0iYQR2CrpdSKos8NCjENm4kc7UYjmm2SjiaWgYDioUsnBNyV+xXkZ4UejymrWuZ+vZc4gbqxWqNXVm37ru+q5eDyG0HoC4d5sKopP0Ve1xopORut4qZMkwNM5vejcYmBl+18Wf/FysUsDHGTztzcYzapDsxyV4Mmmy7+sQlWda7iPG0jIOhiT2Tsi0L43zvfd5Hs175JUmNj4B3PTGTIJchBhdbRtEdnhKC9Sm4Yr1LI0dXrYqkQJnaq3kSc2baw+DhYvZ8fi0S6cBBu0SkHPYJfO+eqLAL0P4HqXLJLwO0J5qFwvo+H3veEp0NGIPD/EwFL/YRfPtUKzYgoG7aD3VwBhyh8jiL5iP4xDGIjJrrLg0pHfUHVVwaX9Pb/KS2XBgE+tE6LV36QfBPKlnq6czYfuV/l59EtUDUtrx31xyMcJoxkeKikEfJvD5AUJnpDvG5jSTZnOHGz2iql4GgyUhH1UIbjAevakULiXoHNIYoX1zwgzPpDEx5Q5KrZa8leFfE9W3u0lqAidcrzNBooTkHb/WH4lcqeakWHoZdrv+xlPbg/X5Z9agOXrY2C7XbC+tyoublVV/dZsDNJ20wOPMmjH1P0TiUmdFZYKcnsTEAo3/1UFZmFP4t53dcSC2InqjB6D598t8lqMyawjfYOb+pR56kfFWjydI=
+  - secure: NSu5WqT5omljIbdLxY5Pp21amZEdjlZXcwDTMytamZy2b8KH2D4tRRibgqy6laZnuKgbp+QSOBzyq/eRLivqFO1ojKA2QVz5xY5I3iSf1msDUxVOYUNiU07xo6zPB4DKbMiS2F90cz1yvQnkdqH6rZcbl+PM4977+iKScbJT90t1sN/hvSEhja0NLsadVGb7p1qWqeMD4Z/GKKUlY1mtL7bVj2CJk0rykPenE0rED2UrWB0RlbQ9sCWJlR1k5zw5p50gHGWIPxxR3/35V+rTlIIRiL/Fe9i6VZ2M4QUe8fsBWGT0AXWCAUkN0zDfhG2ABEfkDMCLuPATosU6ZkbRDdkf1r1jpoF1+Ru0k8MMWtuAKzawGxUSsEEVPdf0qkEGPl0zGmGVy8VCD5wfbwgNyTIcapHbFCS/aN2EoPeQehk5htNett9PpCYhqx9bMk5Yn8ZJOwHO88VfMp3+W7pS4/W5sXyAO59wPbVl5wikDrpa4TYbSZGdpDD61hRQtFB0jlX1vUoSchsqEyZB4bN6ly4lHshtcJ9V4I8SNsv0zdfJbQL9cyX++eBHsIf6ZPI7898B4N6u3EdpsRErfSMuT98k+1T34sjwqWacjGq6amMiCTiZPJG617N8MQb3O5u67RvrriGGUzvpwH7J3xrkfC0qLRa63MisHpmvjeHxRlM=
+addons:
+    apt:
+        packages:
+            - sshpass
 script: bundle exec rake generate
+
+after_success:
+  tar -czf public.tgz public
+  export SSHPASS=$DEPLOY_PASS
+  sshpass -e scp public.tgz  $DEPLOY_DEST
