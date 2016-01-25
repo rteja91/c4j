@@ -16,4 +16,4 @@ script: bundle exec rake generate
 after_success:
 - tar -czf public.tgz public
 - export SSHPASS=$DEPLOY_PASS
-- sshpass -e scp public.tgz  $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+- sshpass -e -o stricthostkeychecking=no scp public.tgz  $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
