@@ -13,6 +13,6 @@ addons:
 script: bundle exec rake generate
 
 after_success:
-  tar -czf public.tgz public
-  export SSHPASS=$DEPLOY_PASS
-  sshpass -e scp public.tgz  $DEPLOY_DEST
+  - tar -czf public.tgz public
+  - export SSHPASS=$DEPLOY_PASS
+  - sshpass -e scp public.tgz  $DEPLOY_DEST
